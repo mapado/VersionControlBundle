@@ -24,14 +24,29 @@ Tasks :
 * Task 3: datamining.place
 
 Versions : 
-| Object | Task | Version |
-| ------ | ---- | ------- |
-| 1 | 1 | v1.2.0 |
-| 2 | 2 | v1.1.3 |
-| 2 | 3 | v2.1 |
-| 3 | 2 | v1.2 |
-| 3 | 3 | v2.1.0 |
+<table>
+<tr>
+<th>Object</th>
+<th>Task</th>
+<th>Version</th>
+</tr>
 
+<tr>
+<td>1</td><td>1</td><td>v1.2.0</td>
+</tr>
+<tr>
+<td>2</td><td>2</td><td>v1.1.3</td>
+</tr>
+<tr>
+<td>2</td><td>3</td><td>v2.1</td>
+</tr>
+<tr>
+<td>3</td><td>2</td><td>v1.2</td>
+</tr>
+<tr>
+<td>3</td><td>3</td><td>v2.1.0</td>
+</tr>
+</table>
 
 ## API
 ### Get a version number
