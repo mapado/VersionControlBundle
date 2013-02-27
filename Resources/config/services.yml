@@ -6,5 +6,5 @@ services:
     mapado_versioncontroller:
         class: %mapado_versioncontroller.manager_class%
         arguments:
-            om: "@doctrine.orm.entity_manager"
+            om: "@doctrine.orm.version_control_entity_manager"
             class: %mapado_versioncontroller.entity_class%

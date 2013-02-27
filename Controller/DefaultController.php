@@ -164,8 +164,8 @@ class DefaultController extends Controller
      */
     private function getTask($taskName)
     {
-        $task = $this->get('doctrine')
-                    ->getRepository('MapadoVersionControlBundle:Task')
+        $task = $this->getManager()
+                    ->getRepository('MapadoVersionControlBundle:Task', 'version_control')
                     ->findOneByName($taskName);
 
         if (!$task) {
@@ -185,7 +185,7 @@ class DefaultController extends Controller
      */
     private function getVersionnable($type, $id, $createIfNotExists = false)
     {
-        $versionnable = $this->get('doctrine')
+        $versionnable = $this->getManager()
                     ->getRepository('MapadoVersionControlBundle:Versionnable')
                     ->findOneBy(array('versionType' => $type, 'versionId' => $id));
 
@@ -195,8 +195,8 @@ class DefaultController extends Controller
                 $versionnable->setVersionType($type)
                             ->setVersionId($id);
 
-                $this->get('doctrine')->getManager()->persist($versionnable);
-                $this->get('doctrine')->getManager()->flush();
+                $this->getManager()->persist($versionnable);
+                $this->getManager()->flush();
             } else {
                 throw new VersionControlException('Versionnable object is not valid');
             }
@@ -219,5 +219,16 @@ class DefaultController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    /**
+     * getManager get version control entity manager : THIS IS AWFUL, I have to move those method into the VersionManager
+     *
+     * @access private
+     * @return void
+     */
+    private function getManager()
+    {
+        return $this->get('doctrine')->getManager('version_control');
     }
 }
