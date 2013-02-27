@@ -1,0 +1,22 @@
+{
+    "name": "mapado/version-control-bundle",
+    "description": "Objects Version Controller",
+    "keywords": ["mapado", "version"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Julien Deniau",
+            "email": "julien.deniau@mapado.com"
+        }
+    ],
+    "require": {
+        "doctrine/orm": ">=2.2.0"
+    },
+    "require-dev": {
+        "atoum/atoum": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "Mapado\\VersionControlBundle": "" }
+    },
+    "target-dir": "Mapado/VersionControlBundle"
+}
