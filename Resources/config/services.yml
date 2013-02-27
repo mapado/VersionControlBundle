@@ -1,0 +1,10 @@
+parameters:
+    mapado_versioncontroller.manager_class: 'Mapado\VersionControlBundle\Doctrine\VersionManager'
+    mapado_versioncontroller.entity_class: 'Mapado\VersionControlBundle\Entity\Versionned'
+
+services:
+    mapado_versioncontroller:
+        class: %mapado_versioncontroller.manager_class%
+        arguments:
+            om: "@doctrine.orm.entity_manager"
+            class: %mapado_versioncontroller.entity_class%

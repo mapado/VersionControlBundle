@@ -12,10 +12,10 @@ Objects :
   * type : Domain
   * id : mapado.com
 * Object 2:
-  * type : RawActivity
+  * type : raw\_activity
   * id : a8eiu82s5
 * Object 3:
-  * type : FinalActivity
+  * type : final\_activity
   * id : 25
 
 Tasks :
@@ -53,15 +53,19 @@ Versions :
 #### Parameters
 ```json
 {
-    "object": 1,
-    "task": 1
+    "task_name": "datamining.date",
+    "versionnable_id": 25,
+    "versionnable_type": "final_activity"
 }
 ```
 
 #### Returns
 ```json
 {
-    "version": "v1.2.0"
+    "complete": "v1.2.0",
+    "major": "1",
+    "minor": "2",
+    "maintenance": "0"
 }
 ```
 
@@ -69,7 +73,8 @@ Versions :
 #### Parameters 
 ```json
 {
-    "object": 2
+    "versionnable_id": 25,
+    "versionnable_type": "final_activity"
 }
 ```
 
@@ -77,12 +82,30 @@ Versions :
 ```json
 [
     {
-        "task": 2,
-        "version": "v1.1.3"
+        "version_number": {
+            "complete": "1.2.0",
+            "major": "1",
+            "minor": "2",
+            "maintenance": "0"
+        },
+        "task_name": "datamining.date",
+        "versionnable": {
+            "id": "25",
+            "type": "final_activity"
+        }
     },
     {
-        "task": 3,
-        "version": "v2.1"
+        "version_number": {
+            "complete": "2.1.0",
+            "major": "2",
+            "minor": "1",
+            "maintenance": "0"
+        },
+        "task_name": "datamining.place",
+        "versionnable": {
+            "id": "25",
+            "type": "final_activity"
+        }
     }
 ]
 ```
@@ -91,7 +114,7 @@ Versions :
 #### Parameters 
 ```json
 {
-    "task": 2
+    "task_name": "datamining.place"
 }
 ```
 
@@ -99,12 +122,30 @@ Versions :
 ```json
 [
     {
-        "object": 2,
-        "version": "v1.1.3"
+        "version_number": {
+            "complete": "1.1.3",
+            "major": 1,
+            "minor": 1,
+            "maintenance": 3
+        },
+        "task_name": "datamining.date",
+        "versionnable": {
+            "id": "a8eiu82s5",
+            "type": "raw_activity"
+        }
     },
     {
-        "object": 3,
-        "version": "v1.2.0"
+        "version_number": {
+            "complete": "1.2.0",
+            "major": 1,
+            "minor": 2,
+            "maintenance": 0
+        },
+        "task_name": "datamining.date",
+        "versionnable": {
+            "id": "25",
+            "type": "final_activity"
+        }
     }
 ]
 ```
@@ -113,22 +154,7 @@ Versions :
 #### Parameters 
 ```json
 {
-    "task": 2,
-    "version" : "v1.1.3"
-}
-```
-
-#### Returns 
-```json
-{
-    "object": 2
-}
-```
-
-#### Parameters 
-```json
-{
-    "task": 2,
+    "task_name": "datamining.place",
     "version" : "> v1.1.5"
 }
 ```
@@ -136,8 +162,46 @@ Versions :
 #### Returns 
 ```json
 {
-    "object": 3,
-    "version": "v1.2.0"
+    "1": {
+        "version_number": {
+            "complete": "1.2.0",
+            "major": 1,
+            "minor": 2,
+            "maintenance": 0
+        },
+        "task_name": "datamining.date",
+        "versionnable": {
+            "id": "25",
+            "type": "final_activity"
+        }
+    }
+}
+```
+
+#### Parameters 
+```json
+{
+    "task_name": "datamining.place",
+    "version" : "= 1.2"
+}
+```
+
+#### Returns 
+```json
+{
+    "1": {
+        "version_number": {
+            "complete": "1.2.0",
+            "major": 1,
+            "minor": 2,
+            "maintenance": 0
+        },
+        "task_name": "datamining.date",
+        "versionnable": {
+            "id": "25",
+            "type": "final_activity"
+        }
+    }
 }
 ```
 
@@ -145,23 +209,33 @@ Versions :
 #### Parameters 
 ```json
 {
-    "Object": 3,
-    "task": 2,
-    "version" : "> v1.1.3"
+    "task_name": "datamining.place",
+    "versionnable_id": 25,
+    "versionnable_type": "final_activity",
+    "version" : "> v2"
 }
 ```
 
 #### Returns 
-True 
+```json
+{
+    "is_valid": true
+}
+```
 
 #### Parameters 
 ```json
 {
-    "Object": 3,
-    "task": 3,
-    "version" : "v2.1.2"
+    "task_name": "datamining.place",
+    "versionnable_id": 25,
+    "versionnable_type": "final_activity",
+    "version" : "<= v1.5.0"
 }
 ```
 
 #### Returns 
-False
+```json
+{
+    "is_valid": false
+}
+```
