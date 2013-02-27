@@ -87,6 +87,7 @@ class SimpleVersion implements Versionnable, \JsonSerializable
     public function setVersionType ($versionType)
     {
         $this->versionType = (string) $versionType;
+        return $this;
     }
 
     /**

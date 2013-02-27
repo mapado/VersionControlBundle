@@ -3,6 +3,7 @@
 namespace Mapado\VersionControlBundle\Doctrine;
 
 use \Doctrine\Common\Persistence\ObjectManager;
+use \Mapado\VersionControlBundle\Entity;
 use \Mapado\VersionControlBundle\Model\VersionManagerInterface;
 use \Mapado\VersionControlBundle\Model\Versionned;
 use \Mapado\VersionControlBundle\Model\Versionnable;
@@ -64,13 +65,22 @@ class VersionManager implements VersionManagerInterface
      */
     public function getVersionNumber(Versionnable $versionnable, TaskInterface $task)
     {
-        $repo = $this->objectManager->getRepository('MapadoVersionControlBundle:Versionned');
-
-        $versionned = $repo->findOneBy(array('versionnable' => $versionnable, 'task' => $task));
+        $versionned = $this->getObject($versionnable, $task);
 
         if ($versionned) {
             return $versionned->getVersionNumber();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getObject(Versionnable $versionnable, TaskInterface $task)
+    {
+        $repo = $this->objectManager->getRepository('MapadoVersionControlBundle:Versionned');
+        $versionned = $repo->findOneBy(array('versionnable' => $versionnable, 'task' => $task));
+
+        return $versionned;
     }
 
     /**
@@ -155,18 +165,35 @@ class VersionManager implements VersionManagerInterface
     /**
      * {@inheritDoc}
      */
-    public function update(Versionned $version)
+    public function update(Versionnable $versionnable, TaskInterface $task, VersionNumber $newVnc)
 	{
+        $version = $this->getObject($versionnable, $task);
+        if (!$version) {
+            $version = new Entity\Versionned;
+            $version->setVersionnable($versionnable)
+                    ->setTask($task)
+                    ->setVersionNumber($newVnc);
+        } else {
+            $this->objectManager->remove($version->getVersionNumber());
+            $version->setVersionNumber($newVnc);
+        }
+
+        $this->objectManager->persist($newVnc);
         $this->objectManager->persist($version);
+
         $this->objectManager->flush();
 	}
     
     /**
      * {@inheritDoc}
      */
-    public function delete(Versionned $version)
+    public function delete(Versionnable $versionnable, TaskInterface $task)
 	{
+        $version = $this->getObject($versionnable, $task);
+
+        $this->objectManager->remove($version->getVersionNumber());
         $this->objectManager->remove($version);
+
         $this->objectManager->flush();
 	}
 }

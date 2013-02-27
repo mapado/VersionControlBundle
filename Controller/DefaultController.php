@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+use \Mapado\VersionControlBundle\Entity;
 use \Mapado\VersionControlBundle\Model\Versionned;
 use \Mapado\VersionControlBundle\Model\VersionNumberComparator;
 use Mapado\VersionControlBundle\Exception\VersionControlException;
@@ -91,7 +92,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * is_validAction
+     * isValidAction
      *
      * @access public
      * @return void
@@ -110,6 +111,48 @@ class DefaultController extends Controller
         return $this->returnJson(array('is_valid' => $valid));
     }
 
+    /**
+     * deleteAction
+     *
+     * @access public
+     * @return void
+     *
+     * @Route("/delete/{taskName}/{versionnableType}:{versionnableId}", name="delete")
+     */
+    public function deleteAction($taskName, $versionnableType, $versionnableId)
+    {
+        // get params
+        $task = $this->getTask($taskName);
+        $versionnable = $this->getVersionnable($versionnableType, $versionnableId);
+
+        $this->get('mapado_versioncontroller')->delete($versionnable, $task);
+
+        // return 
+        return $this->returnJson(array('deleted' => true));
+    }
+
+    /**
+     * updateAction
+     *
+     * @access public
+     * @return void
+     *
+     * @Route("/update/{taskName}/{versionnableType}:{versionnableId}/{versionComplete}", name="update")
+     */
+    public function updateAction($taskName, $versionnableType, $versionnableId, $versionComplete)
+    {
+        // get params
+        $task = $this->getTask($taskName);
+        $versionnable = $this->getVersionnable($versionnableType, $versionnableId, true);
+
+        $vn = new Entity\VersionNumber($versionComplete);
+
+        // create or update object
+        $this->get('mapado_versioncontroller')->update($versionnable, $task, $vn);
+
+        // return 
+        return $this->returnJson(array('updated' => true));
+    }
 
 
     /**
@@ -136,17 +179,27 @@ class DefaultController extends Controller
      *
      * @param string $type
      * @param string $id
+     * @param boolean $createIfNotExists
      * @access public
      * @return Versionnable
      */
-    private function getVersionnable($type, $id)
+    private function getVersionnable($type, $id, $createIfNotExists = false)
     {
         $versionnable = $this->get('doctrine')
                     ->getRepository('MapadoVersionControlBundle:Versionnable')
                     ->findOneBy(array('versionType' => $type, 'versionId' => $id));
 
         if (!$versionnable) {
-            throw new VersionControlException('Versionnable object is not valid');
+            if ($createIfNotExists) {
+                $versionnable = new Entity\Versionnable;
+                $versionnable->setVersionType($type)
+                            ->setVersionId($id);
+
+                $this->get('doctrine')->getManager()->persist($versionnable);
+                $this->get('doctrine')->getManager()->flush();
+            } else {
+                throw new VersionControlException('Versionnable object is not valid');
+            }
         }
 
         return $versionnable;

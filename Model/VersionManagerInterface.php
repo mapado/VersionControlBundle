@@ -56,7 +56,7 @@ interface VersionManagerInterface
      * @access public
      * @return void
      */
-    public function update(Versionned $version);
+    public function update(Versionnable $versionnable, TaskInterface $task, VersionNumber $newVnc);
     
     /**
      * delete a version
@@ -65,5 +65,5 @@ interface VersionManagerInterface
      * @access public
      * @return void
      */
-    public function delete(Versionned $version);
+    public function delete(Versionnable $versionnable, TaskInterface $task);
 }
