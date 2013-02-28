@@ -4,8 +4,8 @@ Abstract Object Version Controller
 
 The purpose of this project is to have a version history of an abstract object.
 
-1. [Project principle](https://github.com/mapado/VersionControlBundle/blob/master/Resources/doc/1-principle.md)
-2. [Webservice implementation](https://github.com/mapado/VersionControlBundle/blob/master/Resources/doc/2-webservice.md)
+1. [Project principle](https://github.com/mapado/VersionControlBundle/blob/master/src/Mapado/VersionControlBundle/Resources/doc/1-principle.md)
+2. [Webservice implementation](https://github.com/mapado/VersionControlBundle/blob/master/src/Mapado/VersionControlBundle/Resources/doc/2-webservice.md)
 
 ## Installation
 ### Get the bundle

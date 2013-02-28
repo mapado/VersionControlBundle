@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="mapado/admin_website" default="build" basedir=".">
+    <property name="builddir" value="${project.basedir}/build" override="true" />
+    <property name="srcdir" value="${project.basedir}/src" override="true" />
+
+    <!-- ==================================================================  -->
+    <!-- Construction                                                        -->
+    <!-- ==================================================================  -->
+    <target name="build" depends="clean-up, phplint, dependencies, pdepend, phpmd, phpcpd, phpcs, phploc, atoum" />
+
+    <!-- =================================================================== -->
+    <!-- Cleaning                                                            -->
+    <!-- =================================================================== -->
+    <target name="clean-up" description="Cleaning temporary elements and creating directory list">
+        <!-- Deleting temp dir -->
+        <delete dir="${builddir}/logs" />
+        <delete dir="${builddir}/coverage" />
+
+        <!-- Creating construction dir -->
+        <mkdir dir="${builddir}/logs" />
+        <mkdir dir="${builddir}/coverage" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- PHP -l                                                              -->
+    <!-- =================================================================== -->
+    <target name="phplint"
+        description="Syntax check (php -l)">
+
+        <phplint haltonfailure="true">
+            <fileset dir="${srcdir}">
+                <include name="*.php"/>
+                <include name="**/*.php"/>
+            </fileset>
+        </phplint>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Dependencies                                                        -->
+    <!-- =================================================================== -->
+    <target name="dependencies" description="Dependencies">
+        <!-- Installing dependancies -->
+        <exec
+            command="composer --no-interaction install --optimize-autoloader"
+            dir="${project.basedir}">
+        </exec>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- PHP_Depend                                                          -->
+    <!-- =================================================================== -->
+    <target name="pdepend"
+        description="Generating jdepend.xml with PHP_Depend">
+
+        <phpdepend file="${srcdir}" haltonerror="true">
+           <logger type="jdepend-xml" outfile="${builddir}/logs/jdepend.xml"/>
+        </phpdepend>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Generation of pmd.xml with phpmd                                    -->
+    <!-- =================================================================== -->
+    <target name="phpmd"
+        description="Generation of pmd.xml with phpmd">
+
+        <phpmd file="${srcdir}">
+            <formatter type="xml" outfile="${builddir}/logs/pmd.xml"/>
+        </phpmd>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Generation of phpcpd.xml by phpcpd                                  -->
+    <!-- =================================================================== -->
+    <target name="phpcpd"
+        description="Generation of phpcpd.xml by phpcpd">
+
+        <phpcpd file="${srcdir}">
+            <formatter type="pmd" outfile="${builddir}/logs/phpcpd.xml"/>
+        </phpcpd>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Generation of phploc.csv by phploc                                  -->
+    <!-- =================================================================== -->
+    <target name="phploc"
+        description="Generation of phploc.csv by phploc">
+
+        <phploc reportType="csv" reportDirectory="${builddir}/logs/" reportName="phploc">
+            <fileset dir="${srcdir}">
+                <include name="**/*.php" />
+                <include name="*.php" />
+            </fileset>
+        </phploc>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Generation of checkstyle.xml by PHP_CodeSniffer                     -->
+    <!-- =================================================================== -->
+    <target name="phpcs"
+        description="Generation of checkstyle.xml by PHP_CodeSniffer">
+
+        <phpcodesniffer
+            standard="PSR2"
+            allowedFileExtensions="php"
+            encoding="utf8"
+            showSniffs="true"
+            file="${srcdir}"
+        >
+            <formatter type="checkstyle" outfile="${builddir}/logs/checkstyle.xml"/>
+            <formatter type="gitblame" outfile="${builddir}/logs/gitblame.txt"/>
+            <formatter type="source" outfile="${builddir}/logs/source.txt"/>
+        </phpcodesniffer>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Generation of sloccount.sc by SLOCCount                             -->
+    <!-- =================================================================== -->
+    <target name="sloccount"
+        description="Generation of sloccount.sc by SLOCCount">
+
+        <exec executable="sloccount" outputproperty="${builddir}/logs/sloccount.sc">
+            <arg line="--duplicates
+                --wide
+                --details
+                ${srcdir}
+            " />
+        </exec>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Generation of junit.xml / Atoum                                     -->
+    <!-- =================================================================== -->
+    <target name="atoum">
+        <exec executable="atoum" checkreturn="true">
+            <arg line="-d ${srcdir}/Mapado/VersionControlBundle/Tests/" />
+            <arg line="-c ${builddir}/atoum.php" />
+            <arg line="--bootstrap-file ${project.basedir}/vendor/autoload.php" />
+        </exec>
+    </target>
+</project>
