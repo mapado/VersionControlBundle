@@ -9,10 +9,10 @@ Objects :
   * type : Domain
   * id : mapado.com
 * Object 2:
-  * type : raw\_activity
+  * type : raw\_object\_type
   * id : a8eiu82s5
 * Object 3:
-  * type : final\_activity
+  * type : final\_object\_type
   * id : 25
 
 Tasks :
@@ -52,7 +52,7 @@ Versions :
 {
     "task_name": "datamining.date",
     "versionnable_id": 25,
-    "versionnable_type": "final_activity"
+    "versionnable_type": "final_object_type"
 }
 ```
 
@@ -71,7 +71,7 @@ Versions :
 ```json
 {
     "versionnable_id": 25,
-    "versionnable_type": "final_activity"
+    "versionnable_type": "final_object_type"
 }
 ```
 
@@ -88,7 +88,7 @@ Versions :
         "task_name": "datamining.date",
         "versionnable": {
             "id": "25",
-            "type": "final_activity"
+            "type": "final_object_type"
         }
     },
     {
@@ -101,7 +101,7 @@ Versions :
         "task_name": "datamining.place",
         "versionnable": {
             "id": "25",
-            "type": "final_activity"
+            "type": "final_object_type"
         }
     }
 ]
@@ -128,7 +128,7 @@ Versions :
         "task_name": "datamining.date",
         "versionnable": {
             "id": "a8eiu82s5",
-            "type": "raw_activity"
+            "type": "raw_object_type"
         }
     },
     {
@@ -141,7 +141,7 @@ Versions :
         "task_name": "datamining.date",
         "versionnable": {
             "id": "25",
-            "type": "final_activity"
+            "type": "final_object_type"
         }
     }
 ]
@@ -169,7 +169,7 @@ Versions :
         "task_name": "datamining.date",
         "versionnable": {
             "id": "25",
-            "type": "final_activity"
+            "type": "final_object_type"
         }
     }
 }
@@ -196,7 +196,7 @@ Versions :
         "task_name": "datamining.date",
         "versionnable": {
             "id": "25",
-            "type": "final_activity"
+            "type": "final_object_type"
         }
     }
 }
@@ -208,7 +208,7 @@ Versions :
 {
     "task_name": "datamining.place",
     "versionnable_id": 25,
-    "versionnable_type": "final_activity",
+    "versionnable_type": "final_object_type",
     "version" : "> v2"
 }
 ```
@@ -225,7 +225,7 @@ Versions :
 {
     "task_name": "datamining.place",
     "versionnable_id": 25,
-    "versionnable_type": "final_activity",
+    "versionnable_type": "final_object_type",
     "version" : "<= v1.5.0"
 }
 ```
