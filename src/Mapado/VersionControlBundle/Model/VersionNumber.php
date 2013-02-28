@@ -54,7 +54,8 @@ class VersionNumber implements \JsonSerializable
      * @access protected
      * @return void
      */
-    protected function createFromString($version) {
+    protected function createFromString($version)
+    {
         $rMajor = '(?<major>[0-9]+)';
         $rMinor = '(?<minor>[0-9]+)';
         $rMaintenance = '(?<maintenance>[0-9]+)';
@@ -163,9 +164,9 @@ class VersionNumber implements \JsonSerializable
     public function __toString()
     {
         return $this->getMajor() .
-            '.' . 
+            '.' .
             $this->getMinor() .
-            '.' . 
+            '.' .
             $this->getMaintenance();
     }
 
@@ -199,4 +200,3 @@ class VersionNumber implements \JsonSerializable
         return strnatcmp($a, $b);
     }
 }
-

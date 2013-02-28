@@ -92,9 +92,11 @@ class VersionNumberComparator extends atoum
                 ->isIdenticalTo($operator);
         }
 
-        $this->exception(function() use ($o) {
-            $o->setOperator('i\'m not an accepted operator');
-        }) ->isInstanceOf('\UnexpectedValueException');
+        $this->exception(
+            function () use ($o) {
+                $o->setOperator('i\'m not an accepted operator');
+            }
+        )->isInstanceOf('\UnexpectedValueException');
     }
 
     /**

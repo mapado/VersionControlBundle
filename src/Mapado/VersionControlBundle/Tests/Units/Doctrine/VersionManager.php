@@ -66,7 +66,7 @@ class VersionManager extends atoum
         $ommc->getClassMetadata = $class;
 
         $rmc = $this->repository->getMockController();
-        $rmc->findBy = function($params) {
+        $rmc->findBy = function ($params) {
             $sp = array();
             $return = array();
             foreach ($this->versionList as $version) {
@@ -87,7 +87,7 @@ class VersionManager extends atoum
 
             return $return;
         };
-        $rmc->findOneBy = function($params) {
+        $rmc->findOneBy = function ($params) {
             $list = $this->repository->findBy($params);
             if (!empty($list)) {
                 return array_shift($list);
@@ -106,7 +106,8 @@ class VersionManager extends atoum
      * @access public
      * @return void
      */
-    public function testVersionNumber() {
+    public function testVersionNumber()
+    {
         // test pass version number
         // 1
         $object = new Model\SimpleVersion('mapado.com', 'domain');
@@ -204,7 +205,7 @@ class VersionManager extends atoum
      * @return void
      */
     public function testObjectList()
-    {  
+    {
         $task = new Model\SimpleTask('validation.date');
 
         $vnc = new Model\VersionNumberComparator('v1.1.3');
@@ -237,9 +238,11 @@ class VersionManager extends atoum
 
         $vnc = new \mock\Mapado\VersionControlBundle\Model\VersionNumberComparator('v1');
         $vnc->getMockController()->getOperator = 'plop';
-        $this->exception(function() use ($task, $vnc) {
-            $this->versionManager->getObjectList($task, $vnc);
-        })->isInstanceOf('\UnexpectedValueException');
+        $this->exception(
+            function () use ($task, $vnc) {
+                $this->versionManager->getObjectList($task, $vnc);
+            }
+        )->isInstanceOf('\UnexpectedValueException');
     }
 
     /**
@@ -313,11 +316,13 @@ class VersionManager extends atoum
 
         $vnc = new \mock\Mapado\VersionControlBundle\Model\VersionNumberComparator('v1');
         $vnc->getMockController()->getOperator = 'plop';
-        $this->exception(function() use($vnc) {
-            $task = new Model\SimpleTask('validation.date');
-            $versionnable = new Model\SimpleVersion('25', 'final_data');
-            $this->versionManager->isValid($versionnable, $task, $vnc);
-        })->isInstanceOf('\UnexpectedValueException');
+        $this->exception(
+            function () use ($vnc) {
+                $task = new Model\SimpleTask('validation.date');
+                $versionnable = new Model\SimpleVersion('25', 'final_data');
+                $this->versionManager->isValid($versionnable, $task, $vnc);
+            }
+        )->isInstanceOf('\UnexpectedValueException');
     }
 
     /**

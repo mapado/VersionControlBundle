@@ -87,48 +87,51 @@ class VersionManager implements VersionManagerInterface
      * {@inheritDoc}
      */
     public function getTaskList(Versionnable $versionnable)
-	{
+    {
         $repo = $this->objectManager->getRepository('MapadoVersionControlBundle:Versionned');
 
         return $repo->findBy(array('versionnable' => $versionnable));
-	}
+    }
 
     /**
      * {@inheritDoc}
      */
     public function getObjectList(TaskInterface $task, VersionNumberComparator $vnc = null)
-	{
+    {
         $repo = $this->objectManager->getRepository('MapadoVersionControlBundle:Versionned');
 
         $parameters = array('task' => $task);
         $taskList = $repo->findBy($parameters);
 
         if (isset($vnc)) {
-            $taskList = array_filter($taskList, function($task) use($vnc) {
-                $vn = $vnc->getVersionNumber();
-                $taskVn = $task->getVersionNumber();
-                $vnCompare = VersionNumber::compare($taskVn, $vn);
-                switch ($vnc->getOperator()) {
-                    case '=':
-                        return $vnCompare == 0;
-                    case '!=':
-                        return $vnCompare != 0;
-                    case '<=':
-                        return $vnCompare <= 0;
-                    case '<':
-                        return $vnCompare < 0;
-                    case '>=':
-                        return $vnCompare >= 0;
-                    case '>':
-                        return $vnCompare > 0;
-                    default: 
-                        throw new \UnexpectedValueException('Operator not defined');
+            $taskList = array_filter(
+                $taskList,
+                function ($task) use ($vnc) {
+                    $vn = $vnc->getVersionNumber();
+                    $taskVn = $task->getVersionNumber();
+                    $vnCompare = VersionNumber::compare($taskVn, $vn);
+                    switch ($vnc->getOperator()) {
+                        case '=':
+                            return $vnCompare == 0;
+                        case '!=':
+                            return $vnCompare != 0;
+                        case '<=':
+                            return $vnCompare <= 0;
+                        case '<':
+                            return $vnCompare < 0;
+                        case '>=':
+                            return $vnCompare >= 0;
+                        case '>':
+                            return $vnCompare > 0;
+                        default:
+                            throw new \UnexpectedValueException('Operator not defined');
+                    }
                 }
-            });
+            );
         }
 
         return $taskList;
-	}
+    }
 
     /**
      * {@inheritDoc}
@@ -157,7 +160,7 @@ class VersionManager implements VersionManagerInterface
                 return $vnCompare >= 0;
             case '>':
                 return $vnCompare > 0;
-            default: 
+            default:
                 throw new \UnexpectedValueException('Operator not defined');
         }
     }
@@ -166,7 +169,7 @@ class VersionManager implements VersionManagerInterface
      * {@inheritDoc}
      */
     public function update(Versionnable $versionnable, TaskInterface $task, VersionNumber $newVnc)
-	{
+    {
         $version = $this->getObject($versionnable, $task);
         if (!$version) {
             $version = new Entity\Versionned;
@@ -182,19 +185,18 @@ class VersionManager implements VersionManagerInterface
         $this->objectManager->persist($version);
 
         $this->objectManager->flush();
-	}
+    }
     
     /**
      * {@inheritDoc}
      */
     public function delete(Versionnable $versionnable, TaskInterface $task)
-	{
+    {
         $version = $this->getObject($versionnable, $task);
 
         $this->objectManager->remove($version->getVersionNumber());
         $this->objectManager->remove($version);
 
         $this->objectManager->flush();
-	}
+    }
 }
-

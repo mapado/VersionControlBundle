@@ -99,9 +99,11 @@ class SimpleVersion extends atoum
         $this->variable($o->getVersionId())
             ->isEqualTo($id);
 
-        $this->exception(function() use ($id, $type) {
-            $o = new Model\SimpleVersion($id);
-        }) ->isInstanceOf('\InvalidArgumentException');
+        $this->exception(
+            function () use ($id, $type) {
+                $o = new Model\SimpleVersion($id);
+            }
+        )->isInstanceOf('\InvalidArgumentException');
     }
 
     /**
@@ -145,24 +147,32 @@ class SimpleVersion extends atoum
             ->isEqualTo('1he0523de9');
 
         // bool
-        $this->exception(function() use ($o) {
-            $o->setVersionId(true);
-        }) ->isInstanceOf('\InvalidArgumentException');
+        $this->exception(
+            function () use ($o) {
+                $o->setVersionId(true);
+            }
+        )->isInstanceOf('\InvalidArgumentException');
 
         // array
-        $this->exception(function() use ($o) {
-            $o->setVersionId(array());
-        }) ->isInstanceOf('\InvalidArgumentException');
+        $this->exception(
+            function () use ($o) {
+                $o->setVersionId(array());
+            }
+        )->isInstanceOf('\InvalidArgumentException');
 
         // object
-        $this->exception(function() use ($o) {
-            $o->setVersionId(new \StdClass);
-        }) ->isInstanceOf('\InvalidArgumentException');
+        $this->exception(
+            function () use ($o) {
+                $o->setVersionId(new \StdClass);
+            }
+        )->isInstanceOf('\InvalidArgumentException');
 
         // null
-        $this->exception(function() use ($o) {
-            $o->setVersionId(null);
-        }) ->isInstanceOf('\InvalidArgumentException');
+        $this->exception(
+            function () use ($o) {
+                $o->setVersionId(null);
+            }
+        )->isInstanceOf('\InvalidArgumentException');
     }
 
     /**

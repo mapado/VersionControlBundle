@@ -126,13 +126,17 @@ class VersionNumber extends atoum
         }
 
 
-        $this->exception(function() {
-            new Model\VersionNumber('this is not a version number');
-        }) ->isInstanceOf('\UnexpectedValueException');
+        $this->exception(
+            function () {
+                new Model\VersionNumber('this is not a version number');
+            }
+        )->isInstanceOf('\UnexpectedValueException');
 
-        $this->exception(function() {
-            new Model\VersionNumber('this is not a 2.1.3 number');
-        }) ->isInstanceOf('\UnexpectedValueException');
+        $this->exception(
+            function () {
+                new Model\VersionNumber('this is not a 2.1.3 number');
+            }
+        )->isInstanceOf('\UnexpectedValueException');
     }
 
     /**

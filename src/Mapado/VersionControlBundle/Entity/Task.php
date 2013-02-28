@@ -48,4 +48,3 @@ class Task extends SimpleTask
         return $this->id;
     }
 }
-

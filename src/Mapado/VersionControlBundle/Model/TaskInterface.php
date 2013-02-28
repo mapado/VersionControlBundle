@@ -11,4 +11,3 @@ interface TaskInterface
 {
     public function getTaskName();
 }
-

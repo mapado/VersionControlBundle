@@ -80,7 +80,11 @@ class DefaultController extends Controller
      * @access public
      * @return void
      *
-     * @Route("/object_list/{taskName}/{operator}{versionComplete}", name="object_list", requirements={"operator" = ">=|>|<=|<|!=|="})
+     * @Route(
+     *     "/object_list/{taskName}/{operator}{versionComplete}",
+     *     name="object_list",
+     *     requirements={"operator" = ">=|>|<=|<|!=|="}
+     * )
      */
     public function objectListAction($taskName, $operator, $versionComplete)
     {
@@ -97,7 +101,11 @@ class DefaultController extends Controller
      * @access public
      * @return void
      *
-     * @Route("/is_valid/{taskName}/{versionnableType}:{versionnableId}/{operator}{versionComplete}", name="is_valid", requirements={"operator" = ">=|>|<=|<|!=|="})
+     * @Route(
+     *     "/is_valid/{taskName}/{versionnableType}:{versionnableId}/{operator}{versionComplete}",
+     *     name="is_valid",
+     *     requirements={"operator" = ">=|>|<=|<|!=|="}
+     * )
      */
     public function isValidAction($taskName, $versionnableType, $versionnableId, $operator, $versionComplete)
     {
@@ -127,7 +135,7 @@ class DefaultController extends Controller
 
         $this->get('mapado_versioncontroller')->delete($versionnable, $task);
 
-        // return 
+        // return
         return $this->returnJson(array('deleted' => true));
     }
 
@@ -150,7 +158,7 @@ class DefaultController extends Controller
         // create or update object
         $this->get('mapado_versioncontroller')->update($versionnable, $task, $vn);
 
-        // return 
+        // return
         return $this->returnJson(array('updated' => true));
     }
 
@@ -222,7 +230,8 @@ class DefaultController extends Controller
     }
 
     /**
-     * getManager get version control entity manager : THIS IS AWFUL, I have to move those method into the VersionManager
+     * getManager get version control entity manager :
+     * THIS IS AWFUL, I have to move those method into the VersionManager
      *
      * @access private
      * @return void
