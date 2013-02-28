@@ -17,5 +17,6 @@
     },
     "autoload": {
         "psr-0": { "Mapado\\VersionControlBundle": "src" }
-    }
+    },
+    "target-dir": "Mapado/VersionControlBundle/src"
 }
