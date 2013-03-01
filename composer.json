@@ -16,7 +16,6 @@
         "atoum/atoum": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Mapado\\VersionControlBundle": "src" }
-    },
-    "target-dir": "Mapado/VersionControlBundle/src"
+        "psr-0": { "Mapado\\VersionControlBundle": "src/" }
+    }
 }
