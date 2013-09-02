@@ -131,7 +131,7 @@
     <!-- Generation of junit.xml / Atoum                                     -->
     <!-- =================================================================== -->
     <target name="atoum">
-        <exec executable="{builddir}/vendor/atoum/atoum/bin/atoum" checkreturn="true">
+        <exec executable="${builddir}/vendor/atoum/atoum/bin/atoum" checkreturn="true">
             <arg line="-d ${srcdir}/Mapado/VersionControlBundle/Tests/" />
             <arg line="-c ${builddir}/atoum.php" />
             <arg line="--bootstrap-file ${project.basedir}/vendor/autoload.php" />
