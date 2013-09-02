@@ -41,7 +41,7 @@
     <target name="dependencies" description="Dependencies">
         <!-- Installing dependancies -->
         <exec
-            command="composer --no-interaction install --optimize-autoloader"
+            command="composer --no-interaction install --optimize-autoloader --dev"
             dir="${project.basedir}">
         </exec>
     </target>
