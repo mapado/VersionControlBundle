@@ -68,12 +68,14 @@ class Versionned extends atoum
             ->isInstanceOf('\Mapado\VersionControlBundle\Model\VersionNumber');
 
         // type is not a version number
+        /*
         $this->when(
             function () use ($o) {
                 $o->setVersionNumber('1.2.3');
             }
         )->error()
             ->exists();
+        */
     }
 
     /**
@@ -93,12 +95,14 @@ class Versionned extends atoum
         $this->object($o->getVersionnable())
             ->isInstanceOf('\Mapado\VersionControlBundle\Model\Versionnable');
 
+        /*
         $this->when(
             function () use ($o) {
                 $o->setVersionnable(new \StdClass);
             }
         )->error()
             ->exists();
+        */
     }
 
     /**
@@ -118,12 +122,14 @@ class Versionned extends atoum
         $this->object($o->getTask())
             ->isInstanceOf('\Mapado\VersionControlBundle\Model\TaskInterface');
 
+        /*
         $this->when(
             function () use ($o) {
                 $o->setTask(new \StdClass);
             }
         )->error()
             ->exists();
+        */
     }
 
     /**

@@ -48,7 +48,7 @@ class VersionManager extends atoum
      * @access public
      * @return void
      */
-    public function beforeTestMethod()
+    public function beforeTestMethod($testMethod)
     {
         // set tests datas
         $this->setTestsDatas();
@@ -66,10 +66,11 @@ class VersionManager extends atoum
         $ommc->getClassMetadata = $class;
 
         $rmc = $this->repository->getMockController();
-        $rmc->findBy = function ($params) {
+        $versionList = $this->versionList;
+        $rmc->findBy = function ($params) use ($versionList) {
             $sp = array();
             $return = array();
-            foreach ($this->versionList as $version) {
+            foreach ($versionList as $version) {
                 $found = true;
 
                 // compare each parameter
@@ -87,8 +88,8 @@ class VersionManager extends atoum
 
             return $return;
         };
-        $rmc->findOneBy = function ($params) {
-            $list = $this->repository->findBy($params);
+        $rmc->findOneBy = function ($params) use ($rmc) {
+            $list = $rmc->findBy($params);
             if (!empty($list)) {
                 return array_shift($list);
             }
@@ -165,13 +166,17 @@ class VersionManager extends atoum
         $this->sizeOf($taskList)->isZero();
 
         // errors
-        $this->when($this->versionManager->getTaskList(new \StdClass))
+        /* Trigger catchable fatal error
+        $this->when(function () {
+            $this->versionManager->getTaskList(new \StdClass);
+        })
             ->error()
                 ->exists();
 
         $this->when($this->versionManager->getTaskList(null))
             ->error()
                 ->exists();
+                */
     }
 
     /**
